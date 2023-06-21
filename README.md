@@ -11,15 +11,7 @@ Heavily inspired by [copilot.lua](https://github.com/zbirenbaum/copilot.lua) and
 
 ## Install
 
-1. Create and get your API token from here https://huggingface.co/settings/tokens.
-
-2. Define how the plugin will read your token. For this you have multiple options, in order of precedence:
-    1. Pass `api_token = <your token>` in plugin opts - this is not recommended if you use a versioning tool for your configuration files
-    2. Set the `HUGGING_FACE_HUB_TOKEN` environment variable
-    3. You can define your `HF_HOME` environment variable and create a file containing your token at `$HF_HOME/token`
-    4. Install the [huggingface-cli](https://huggingface.co/docs/huggingface_hub/quick-start) and run `huggingface-cli login` - this will prompt you to enter your token and set it at the right path
-
-3. Choose your model on the [Hugging Face Hub](https://huggingface.co/)
+Install the plugin, and set the `model` parameter to the url for your private inference endpoint e.g. `https://myserver.com/generate`
 
 ### Using [packer](https://github.com/wbthomason/packer.nvim)
 
@@ -66,8 +58,7 @@ require('hfcc').setup({
 local hfcc = require('hfcc')
 
 hfcc.setup({
-  api_token = "", -- cf Install paragraph
-  model = "bigcode/starcoder", -- can be a model ID or an http(s) endpoint
+  model = "https://myserver.com/generate",
   -- parameters that are added to the request body
   query_params = {
     max_new_tokens = 60,

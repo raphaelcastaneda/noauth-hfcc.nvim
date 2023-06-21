@@ -23,13 +23,12 @@ local function parse_response(prefix_len, response)
   if fim.enabled then
     local after_fim_mid = utils.string_after_delim(response, "<fim_middle>")
     if after_fim_mid == nil then
-      return nil
+      after_fim_mid = response
     end
     local clean_response = utils.rstrip(after_fim_mid:gsub(stop_token, ""))
     return utils.split_str(clean_response, "\n")
   else
-    local prefix_removed = string.sub(response, prefix_len + 1)
-    local clean_response = utils.rstrip(prefix_removed:gsub(stop_token, ""))
+    local clean_response = utils.rstrip(response:gsub(stop_token, ""))
     return utils.split_str(clean_response, "\n")
   end
 end
@@ -100,16 +99,18 @@ function M.suggest()
     end
     M.suggestion = lines
     local extmark = {
-      virt_text_win_col = c,
+      virt_text_win_col = c + 3,
       virt_text = { { lines[1], M.hl_group } },
     }
+
     if #lines > 1 then
       extmark.virt_lines = {}
       for i = 2, #lines do
-        extmark.virt_lines[i - 1] = { { lines[i], M.hl_group } }
+        extmark.virt_lines[i-1] = { { lines[i], M.hl_group } }
       end
     end
-    api.nvim_buf_set_extmark(0, M.ns_id, r - 1, c - 1, extmark)
+
+    api.nvim_buf_set_extmark(0, M.ns_id, r - 1, c - 1 , extmark)
   end)
 end
 
@@ -129,7 +130,8 @@ function M.complete()
 end
 
 function M.should_complete()
-  return M.suggestion_enabled
+  local filename_len = string.len(vim.fn.expand("%"))
+  return filename_len > 0 and M.suggestion_enabled
 end
 
 function M.toggle_suggestion()
