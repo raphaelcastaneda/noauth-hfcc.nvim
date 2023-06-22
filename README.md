@@ -1,10 +1,15 @@
-# 🤗 Hugging Face Code Completion for Neovim
+# 🐢 TurtlePilot Code Completion for Neovim
 
-**WIP**: this is a PoC at the moment
+**EXPERIMENTAL**: This is a carbon copy of a carbon copy. Don't expect stability.
 
-This Neovim client is like Copilot but you can pick your model on the Hugging Face Hub.
+This Neovim client is forked from the [huggingface completion client](https://github.com/huggingface/hfcc.nvim), which itself was 
+heavily inspired by [copilot.lua](https://github.com/zbirenbaum/copilot.lua) and [tabnine-nvim](https://github.com/codota/tabnine-nvim)
 
-Heavily inspired by [copilot.lua](https://github.com/zbirenbaum/copilot.lua) and [tabnine-nvim](https://github.com/codota/tabnine-nvim)
+Noteworthy changes made to HFcc:
+* Remove authentication headers from requests
+* Assume server already strips out the pre/post completion context
+* Insert filename prefix in request to server
+* Disable suggestions on buffers that are not files
 
 
 ![demonstration use of hfcc.nvim](assets/hfcc_demo.gif)
