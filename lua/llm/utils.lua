@@ -46,7 +46,7 @@ function M.split_str(str, separator)
 end
 
 function M.trim(s)
-  return string.gsub(s, "^%s*(.-)%s*$", "%1")
+  return string.gsub(s, "^(.-)%s*$", "%1")
 end
 
 function M.startswith(str, begin)
