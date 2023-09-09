@@ -118,7 +118,7 @@ function M.suggest()
     end
     M.suggestion = lines
     local extmark = {
-      virt_text_win_col = c,
+      virt_text_pos = 'inline',
       virt_text = { { lines[1], M.hl_group } },
     }
     if #lines > 1 then
@@ -127,7 +127,7 @@ function M.suggest()
         extmark.virt_lines[i - 1] = { { lines[i], M.hl_group } }
       end
     end
-    api.nvim_buf_set_extmark(0, M.ns_id, r - 1, c - 1, extmark)
+    api.nvim_buf_set_extmark(0, M.ns_id, r - 1, c, extmark)
   end)
 end
 
